@@ -1,27 +1,37 @@
-// Import functions or variables from other modules
-import { sayHello } from './utils.js';
+import { createPageControls } from './components/PageControls.js';
+import { createPageView } from './components/PageView.js';
+import { createCanvasSettings } from './components/CanvasSettings.js';
+import { createSupabaseConnector, handleSupabaseAuth } from './components/SupabaseConnector.js';
 
-/**
- * Main application logic goes here.
- * This function is called when the script is loaded.
- */
-function main() {
-    console.log("App started!");
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Supabase Client Initialization ---
+    const SUPABASE_URL = 'https://ttzakubulphvibneblpm.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0emFrdWJ1bHBodmlibmVibHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExMDYwMTYsImV4cCI6MjA2NjY4MjAxNn0.SXB9SUHUEOrpOsnZSsfsnCxqkc4wUbucpCSGlKghQjM';
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Get the main app element
-    const appElement = document.getElementById('app');
-    const outputElement = document.getElementById('output');
+    // --- Component Containers ---
+    const controlsContainer = document.getElementById('editor-controls-container');
+    const pageViewContainer = document.getElementById('page-view-container');
+    const canvasSettingsContainer = document.getElementById('canvas-settings-container');
+    const supabaseContainer = document.getElementById('supabase-connector-container');
 
-    if (appElement && outputElement) {
-        // Use the imported function
-        const greeting = sayHello("Developer");
-        outputElement.textContent = greeting;
-        console.log(greeting);
-    } else {
-        console.error("Required elements not found in the DOM.");
+    // --- Render Components ---
+    if (controlsContainer) {
+        createPageControls(controlsContainer);
     }
-}
+    if (pageViewContainer) {
+        createPageView(pageViewContainer);
+    }
+    if (canvasSettingsContainer) {
+        createCanvasSettings(canvasSettingsContainer);
+    }
+    if (supabaseContainer) {
+        createSupabaseConnector(supabaseContainer);
+        // After rendering the component, attempt to authenticate
+        handleSupabaseAuth(supabaseClient);
+    }
 
-// Run the main function when the document is ready
-// Since we use `defer` in the script tag, the DOM will be ready when this executes.
-main();
+    console.log('CanvasLMS Component Tool Initialized');
+});
+
