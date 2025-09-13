@@ -1,0 +1,16 @@
+/* Using Tailwind CSS via CDN for rapid styling.
+   You can replace this with your own custom CSS or another framework.
+   For simplicity in this setup, we'll use a link in the HTML,
+   but a production setup might involve a build step.
+*/
+@import url('https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css');
+
+/* Custom global styles */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* You can add more specific, non-utility styles here */
+.container {
+    max-width: 800px;
+}
